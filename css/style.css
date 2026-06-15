@@ -1,0 +1,180 @@
+/*
+  style.css — Dungeon Loot Splitter
+
+  Mobile-first: the base styles stack every panel in a single column. At the
+  768px breakpoint the layout switches to a two-column grid, and the logic
+  explanation panel spans both columns. That is the visible layout change.
+
+  Palette is high contrast for accessibility (WCAG / Section 508):
+    ink   #2a2620 on parchment #f4efe4  -> very high contrast
+    white #ffffff on forest   #1f5d4c   -> passes for header and buttons
+    error #9b1c1c on surface            -> strong, readable red
+*/
+
+:root {
+  --color-bg: #f4efe4;
+  --color-surface: #fbf8f1;
+  --color-ink: #2a2620;
+  --color-muted: #5c554a;
+  --color-accent: #1f5d4c;
+  --color-accent-dark: #164236;
+  --color-error: #9b1c1c;
+  --color-border: #d8cfbd;
+  --radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  line-height: 1.5;
+}
+
+.site-header {
+  padding: 1.5rem 1rem;
+  text-align: center;
+  background-color: var(--color-accent);
+  color: #ffffff;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+/* Mobile-first: a normal block flow makes the panels stack vertically. */
+.layout {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.panel {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.panel h2 {
+  margin-top: 0;
+  color: var(--color-accent-dark);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.field label {
+  font-weight: bold;
+}
+
+.field input {
+  padding: 0.6rem 0.7rem;
+  font-size: 1rem;
+  color: var(--color-ink);
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.button {
+  padding: 0.65rem 1.4rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: var(--color-accent);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: var(--color-accent-dark);
+}
+
+/* A visible focus outline is required for keyboard accessibility (ADA). */
+.field input:focus-visible,
+.button:focus-visible {
+  outline: 3px solid var(--color-accent-dark);
+  outline-offset: 2px;
+}
+
+.message {
+  min-height: 1.25rem;
+  margin: 0.75rem 0 0;
+  font-weight: bold;
+  color: var(--color-error);
+}
+
+.loot-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.loot-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0.25rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.loot-list li.empty {
+  justify-content: flex-start;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+.loot-value {
+  font-variant-numeric: tabular-nums;
+  font-weight: bold;
+}
+
+.total {
+  margin: 0.5rem 0 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--color-accent-dark);
+}
+
+.results {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 2px solid var(--color-border);
+}
+
+.reflection code {
+  background-color: var(--color-bg);
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+}
+
+/*
+  Breakpoint: at 768px and wider, switch to a two-column grid. The four content
+  panels fill two rows, and the reflection panel spans both columns. The title
+  in the header stays full width above the grid, giving four horizontal rows.
+*/
+@media (min-width: 768px) {
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .reflection {
+    grid-column: span 2;
+  }
+}

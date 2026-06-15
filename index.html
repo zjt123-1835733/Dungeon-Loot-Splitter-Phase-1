@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dungeon Loot Splitter: a party enters loot items, the app totals the loot, and splits it evenly among party members in a responsive interface.">
+    <meta name="author" content="Juntao Zhong">
+    <meta name="keywords" content="loot splitter, JavaScript, event-driven, DOM, array of objects, responsive">
+    <title>Dungeon Loot Splitter</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+
+  <body>
+    <!-- Top row (spans both columns at desktop): the application title. -->
+    <header class="site-header">
+      <h1>Dungeon Loot Splitter</h1>
+    </header>
+
+    <main class="layout">
+      <!-- Second row, left cell: party size input. -->
+      <section class="panel" aria-labelledby="party-heading">
+        <h2 id="party-heading">Party Setup</h2>
+        <div class="field">
+          <label for="party-size">Number of Party Members:</label>
+          <input
+            type="number"
+            id="party-size"
+            name="party-size"
+            min="1"
+            step="1"
+            value="1"
+          >
+        </div>
+      </section>
+
+      <!-- Second row, right cell: the loot entry form. -->
+      <section class="panel" aria-labelledby="add-loot-heading">
+        <h2 id="add-loot-heading">Add Loot</h2>
+
+        <div class="field">
+          <label for="loot-name">Loot Name:</label>
+          <input
+            type="text"
+            id="loot-name"
+            name="loot-name"
+            autocomplete="off"
+            placeholder="Flaming Sword"
+          >
+        </div>
+
+        <div class="field">
+          <!-- step="0.01" lets the value accept cents (decimal values). -->
+          <label for="loot-value">Loot Value:</label>
+          <input
+            type="number"
+            id="loot-value"
+            name="loot-value"
+            min="0"
+            step="0.01"
+            inputmode="decimal"
+            placeholder="75.00"
+          >
+        </div>
+
+        <button type="button" id="add-loot-button" class="button">Add Loot</button>
+
+        <!-- Validation feedback lives on the page; role="alert" announces it. -->
+        <p id="loot-message" class="message" role="alert" aria-live="assertive"></p>
+      </section>
+
+      <!-- Third row, left cell: the loot list and the running Total Loot. -->
+      <section class="panel" aria-labelledby="loot-list-heading">
+        <h2 id="loot-list-heading">Loot List</h2>
+        <ul id="loot-list" class="loot-list" aria-live="polite"></ul>
+        <p id="running-total" class="total" aria-live="polite">Total Loot: $0.00</p>
+      </section>
+
+      <!-- Third row, right cell: split button and the final results. -->
+      <section class="panel" aria-labelledby="split-heading">
+        <h2 id="split-heading">Split Loot</h2>
+        <button type="button" id="split-loot-button" class="button">Split Loot</button>
+
+        <p id="split-message" class="message" role="alert" aria-live="assertive"></p>
+
+        <div class="results" aria-live="polite">
+          <p id="final-total" class="total">Total Loot: $0.00</p>
+          <p id="per-member" class="total">Loot Per Party Member: $0.00</p>
+        </div>
+      </section>
+
+      <!-- Bottom row (spans both columns): the logic explanation / reflection. -->
+      <section class="panel reflection" aria-labelledby="logic-heading">
+        <h2 id="logic-heading">Logic Explanation</h2>
+        <p>
+          All loot is kept in one array called <code>lootItems</code>. Each time
+          the Add Loot button is clicked, the program builds a small object that
+          holds the item's <code>name</code> and <code>value</code> and pushes
+          that object onto the array, so the data keeps growing across clicks
+          instead of resetting each time.
+        </p>
+        <p>
+          Loops are used in two places. One <code>for</code> loop adds up every
+          item's value to produce the Total Loot, and a second <code>for</code>
+          loop walks through the array to rebuild the on-screen loot list each
+          time it changes. The same total loop is reused when splitting the loot.
+        </p>
+        <p>
+          Conditional logic (<code>if</code> statements) runs inside the
+          validation functions before any data is stored or split. It blocks
+          empty names, missing or non-numeric values, and negative values from
+          entering the array. Before a split, it also checks that at least one
+          loot item exists and that the party size is one or greater. When a
+          check fails, a message is shown inside the page instead of an alert.
+        </p>
+      </section>
+    </main>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
