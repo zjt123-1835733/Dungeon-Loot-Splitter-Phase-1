@@ -1,4 +1,4 @@
-// script.js — Dungeon Loot Splitter (Final Project)
+// script.js — Dungeon Loot Splitter 
 //
 // The program is event-driven: it stays idle until the user clicks a button.
 // Add Loot stores an item and re-renders the list; Split Loot divides the total
@@ -6,10 +6,6 @@
 // console.log, or document.write).
 
 "use strict";
-
-// ---------------------------------------------------------------------------
-// Shared application state
-// ---------------------------------------------------------------------------
 
 // One array holds every loot item as an object { name, value }. It is declared
 // at the top level so the data persists across separate button clicks instead
@@ -21,10 +17,7 @@ const lootItems = [];
 const MinLootValue = 0;
 const MinPartySize = 1;
 
-// ---------------------------------------------------------------------------
 // Element references (accessed only with getElementById, as required)
-// ---------------------------------------------------------------------------
-
 const partySizeInput = document.getElementById("party-size");
 const lootNameInput = document.getElementById("loot-name");
 const lootValueInput = document.getElementById("loot-value");
@@ -37,10 +30,7 @@ const perMemberOutput = document.getElementById("per-member");
 const lootMessageOutput = document.getElementById("loot-message");
 const splitMessageOutput = document.getElementById("split-message");
 
-// ---------------------------------------------------------------------------
 // Helper functions
-// ---------------------------------------------------------------------------
-
 // User text is placed into innerHTML when rendering, so it is escaped first.
 // Without this, characters like < or & could break the markup or inject HTML.
 function escapeHtml(text) {
@@ -80,10 +70,6 @@ function calculateTotal() {
 
   return total;
 }
-
-// ---------------------------------------------------------------------------
-// Validation (runs before data is stored or split)
-// ---------------------------------------------------------------------------
 
 // Validates the loot entry inputs. Returns an object so the caller can both
 // decide whether to store the item and show the correct message on the page.
@@ -132,10 +118,6 @@ function validatePartySize(rawValue) {
   return { isValid: true, message: "", value: numericValue };
 }
 
-// ---------------------------------------------------------------------------
-// Rendering
-// ---------------------------------------------------------------------------
-
 // Renders the loot list and the running Total Loot. A for loop builds the whole
 // list as one string, which is then written to the DOM a single time (the DOM
 // is never updated inside the loop).
@@ -161,10 +143,7 @@ function renderLoot() {
   runningTotalOutput.textContent = "Total Loot: " + formatCurrency(calculateTotal());
 }
 
-// ---------------------------------------------------------------------------
 // Event handlers
-// ---------------------------------------------------------------------------
-
 // Reads the loot inputs, validates them, stores a valid item as an object in
 // the array, then re-renders the list and running total.
 function addLoot() {
@@ -221,10 +200,7 @@ function splitLoot() {
     "Loot Per Party Member: " + formatCurrency(lootPerMember);
 }
 
-// ---------------------------------------------------------------------------
 // Startup
-// ---------------------------------------------------------------------------
-
 // Register the listeners. After this the program is idle and only does work
 // when one of the buttons is clicked.
 addLootButton.addEventListener("click", addLoot);
